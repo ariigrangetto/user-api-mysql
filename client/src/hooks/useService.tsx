@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import type { USERS } from "../types.d";
-import { fetchUsers } from "../service/fetchUser.js";
+import getUsers from "../service/getUsers.js";
 
 export default function useService() {
   const { isLoading, isError, data } = useQuery<USERS[]>({
     queryKey: ["users"],
-    queryFn: fetchUsers,
+    queryFn: getUsers,
   });
 
   return {

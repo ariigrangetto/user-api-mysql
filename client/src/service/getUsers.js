@@ -1,12 +1,14 @@
-const url = import.meta.env.VITE_PATH_URL;
+const API_URL = import.meta.env.VITE_PATH_URL;
 
-export async function fetchUsers() {
+export default async function getUsers() {
   try {
-    const result = await fetch(url);
+    const result = await fetch(`${API_URL}/`);
     if (!result.ok) {
       throw new Error("Error fetching data");
     }
-    const data = result.json();
+
+    const data = await result.json();
+
     return data.users;
   } catch (error) {
     console.error("Error fetching: " + error.message);
