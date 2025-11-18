@@ -1,10 +1,12 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useState } from "react";
 import "./App.css";
-import { USERS, type filterTypes } from "./types";
+import type { USERS, filterTypes } from "./types";
 import useService from "./hooks/useService";
 import { useQueryClient } from "@tanstack/react-query";
 import { SearchUsers } from "./components/SearchUser";
+import WithUsers from "./components/WithUsers.jsx";
+import WithoutUsers from "./components/WithoutUsers.js";
 
 function App() {
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -58,11 +60,11 @@ function App() {
   };
 
   const sortedUsersByName = sortByName
-    ? filteredByText.toSorted((a, b) => a.firstName.localeCompare)
+    ? [...filteredByText].sort((a, b) => a.firstName.localeCompare(b.firstName))
     : filteredByText;
 
   const sortedUsersByAge = sortByAge
-    ? sortedUsersByName.toSorted((a, b) => a.age - b.age)
+    ? [...sortedUsersByName].sort((a, b) => a.age - b.age)
     : sortedUsersByName;
 
   const totalPages = Math.ceil(sortedUsersByAge?.length / RESULTS_PER_PAGE);
@@ -100,6 +102,8 @@ function App() {
           onTextToFilter={handleFilterByText}
           onSearch={handleSearch}
         />
+        {isLoading && <p>Loading...</p>}
+        {isError && <p>Error</p>}
         <section className='users-lists'>
           {resultsPerPage?.length > 0 ? (
             <>
