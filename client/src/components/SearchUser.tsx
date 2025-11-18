@@ -22,7 +22,8 @@ export const SearchUsers = memo(function SearchUser({
   const handleSearchUser = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const formData = new FormData(e.target);
+    //REVISAR
+    const formData = new FormData(e.currentTarget);
 
     const filter = {
       role: formData.get(idRole),
